@@ -1,0 +1,40 @@
+name: HUIT Schedule Hub CI (PHP Syntax Check)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP Environment
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, dom, fileinfo, mysql
+
+    - name: Validate Composer Configuration
+      run: composer validate --no-check-lock
+
+    - name: Run PHP Syntax Check (CI Quality Assurance)
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -not -path "./storage/*" -print0 | xargs -0 -n 1 php -l
+```[cite: 1]
+
+---
+
+### Bước 3: Đẩy toàn bộ dự án lên GitHub để kích hoạt CI/CD
+
+Mở terminal tại thư mục gốc dự án của bạn và chạy các lệnh Git sau để lưu và đồng bộ toàn bộ thành quả lên GitHub:
+
+```bash
+git add .
+git commit -m "Finalize HUIT Schedule Hub: Complete Open Source docs, 15-period timetable matrix UI, and GitHub Actions CI workflow"
+git push origin main
